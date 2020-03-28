@@ -10,14 +10,14 @@ USAGE
     pic-optimizer.sh [-q QUALITY] [-s SIZE] [-r] [-n] {IN_FILE} -o {OUT_FILE}
 
 OPTIONS
-    -q QUALITY      Defines quality of the conversion. QUALITY is a number from
+    -q QUALITY      Defines quality of the output file. QUALITY is a number from
                     0 to 100. Maps to jpegoptim '-m' and pngquant '--quality'.
                     [default = 66]
     -s SIZE         Defines size of the output image. Format: {width}x{height}.
                     You can specify both or just one of them.
-    -r              Removes metadata from conversion. Maps to jpegoptim '-s' and
+    -r              Removes metadata during conversion. Maps to jpegoptim '-s' and
                     pngquant '--strip'.
-    -n              Fake it, only prints commands.
+    -n              Fakes it, so it only prints commands.
 
 EXAMPLES
     $ ./pic-optimizer.sh IN.JPG -o OUT.JPG -r
