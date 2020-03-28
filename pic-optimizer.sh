@@ -177,7 +177,7 @@ main() {
     else
         syl_exit_err "wrong format for input file" $ERR_WRONG_ARG
     fi
-    syl_mktemp "$SCRIPT_NAME" ".$FORMAT_OUT"
+    syl_mktemp "`basename $SCRIPT_NAME .sh`" ".$FORMAT_OUT"
     FILE_TMP="$RET"
     if [[ -n "$OPT_SIZE" ]]; then
         $FAKE convert "$OPT_IN" -quality 100 -resize "$OPT_SIZE" "$FILE_TMP"
@@ -185,7 +185,6 @@ main() {
         $FAKE convert "$OPT_IN" -quality 100                     "$FILE_TMP"
     fi
 
-    OUT_STREAM=">"
     if [[ "$FORMAT_OUT" = "JPG" ]]; then
         [[ "$OPT_STRIP" ]] && OPT_STRIP="-s"
         [[ "$FAKE" ]] && OPT_OUT="/dev/stdout"
