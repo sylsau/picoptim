@@ -24,6 +24,10 @@ readonly ERR_NO_FILE=127
 RET=
 # Temporary dir
 readonly TMP_DIR="/tmp"
+# Commands
+CONVERT=convert
+PNGQUANT=pngquant
+JPEGOPTIM=jpegoptim
 
 # Test if a file exists (dir or not)
 # $1: path to file
@@ -130,9 +134,9 @@ FAKE=
 
 main() {
     # check dependencies
-    syl_need_cmd "convert"
-    syl_need_cmd "jpegoptim"
-    syl_need_cmd "pngquant"
+    syl_need_cmd "$CONVERT"
+    syl_need_cmd "$JPEGOPTIM"
+    syl_need_cmd "$PNGQUANT"
     syl_need_dir "$TMP_DIR"
     syl_need_file "/dev/stdout"
     # check if at least 2 args
@@ -170,9 +174,9 @@ main() {
     done
     # check if in != out
     [[ "$OPT_IN" != "$OPT_OUT" ]] || syl_exit_err "output file needs to be different than input file" $ERR_WRONG_ARG
-    if [[ -n "`echo "$OPT_OUT" | grep "jpe\?g$"`" ]]; then
+    if [[ -n "`echo "$OPT_OUT" | grep -i "jpe\?g$"`" ]]; then
         FORMAT_OUT=JPG
-    elif [[ -n "`echo "$OPT_OUT" | grep "png$"`" ]]; then
+    elif [[ -n "`echo "$OPT_OUT" | grep -i "png$"`" ]]; then
         FORMAT_OUT=PNG
     else
         syl_exit_err "wrong format for input file" $ERR_WRONG_ARG
@@ -180,19 +184,19 @@ main() {
     syl_mktemp "`basename $SCRIPT_NAME .sh`" ".$FORMAT_OUT"
     FILE_TMP="$RET"
     if [[ -n "$OPT_SIZE" ]]; then
-        $FAKE convert "$OPT_IN" -quality 100 -resize "$OPT_SIZE" "$FILE_TMP"
+        $FAKE $CONVERT "$OPT_IN" -quality 100 -resize "$OPT_SIZE" "$FILE_TMP"
     else
-        $FAKE convert "$OPT_IN" -quality 100                     "$FILE_TMP"
+        $FAKE $CONVERT "$OPT_IN" -quality 100                     "$FILE_TMP"
     fi
 
     if [[ "$FORMAT_OUT" = "JPG" ]]; then
         [[ "$OPT_STRIP" ]] && OPT_STRIP="-s"
         [[ "$FAKE" ]] && OPT_OUT="/dev/stdout"
-        $FAKE jpegoptim "$FILE_TMP" $OPT_STRIP -m$OPT_QUALITY --stdout >"$OPT_OUT"
+        $FAKE $JPEGOPTIM "$FILE_TMP" $OPT_STRIP -m$OPT_QUALITY --stdout >"$OPT_OUT"
     elif [[ "$FORMAT_OUT" = "PNG" ]]; then
         [[ "$OPT_STRIP" ]] && OPT_STRIP="--strip"
         [[ "$FAKE" ]] && OPT_OUT="/dev/stdout"
-        $FAKE pngquant "$FILE_TMP" $OPT_STRIP --quality $OPT_QUALITY   >"$OPT_OUT"
+        $FAKE $PNGQUANT "$FILE_TMP" $OPT_STRIP --quality $OPT_QUALITY   >"$OPT_OUT"
     else
         syl_exit_err "wrong format for input file" $ERR_WRONG_ARG
     fi
