@@ -95,14 +95,14 @@ USAGE
     $SCRIPT_NAME [-q QUALITY] [-s SIZE] [-r] [-n] {IN_FILE} -o {OUT_FILE}
 
 OPTIONS
-    -q QUALITY      Defines quality of the conversion. QUALITY is a number from
+    -q QUALITY      Defines quality of the output file. QUALITY is a number from
                     0 to 100. Maps to jpegoptim '-m' and pngquant '--quality'.
                     [default = $OPT_QUALITY]
     -s SIZE         Defines size of the output image. Format: {width}x{height}.
                     You can specify both or just one of them.
-    -r              Removes metadata from conversion. Maps to jpegoptim '-s' and
+    -r              Removes metadata during conversion. Maps to jpegoptim '-s' and
                     pngquant '--strip'.
-    -n              Fake it, only prints commands.
+    -n              Fakes it, so it only prints commands.
 
 EXAMPLES
     $ ./$SCRIPT_NAME IN.JPG -o OUT.JPG -r
@@ -174,6 +174,7 @@ main() {
     done
     # check if in != out
     [[ "$OPT_IN" != "$OPT_OUT" ]] || syl_exit_err "output file needs to be different than input file" $ERR_WRONG_ARG
+    [[ "$OPT_IN" && "$OPT_OUT" ]] || syl_exit_err "missing input or output file" $ERR_WRONG_ARG
     if [[ -n "`echo "$OPT_OUT" | grep -i "jpe\?g$"`" ]]; then
         FORMAT_OUT=JPG
     elif [[ -n "`echo "$OPT_OUT" | grep -i "png$"`" ]]; then
