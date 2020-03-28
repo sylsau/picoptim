@@ -80,7 +80,7 @@ syl_mktemp_dir() {
 show_help() {
     cat << EOF
 $SCRIPT_NAME v$VERSION
-    Simple handy script to optimize JPEG and PNG files in a flash. Really just a 
+    Simple handy script to optimize JPEG and PNG images in a flash. Really just a 
     wrapper around jpegoptim and pngquant. Saves a LOT of time for web assets 
     optimization.
 
