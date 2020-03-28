@@ -1,0 +1,38 @@
+pic-optimizer.sh v20200328
+    Simple handy script to optimize JPEG and PNG files in a flash. Really just a 
+    wrapper around jpegoptim and pngquant. Saves a LOT of time for web assets 
+    optimization.
+
+REQUIREMENTS
+    jpegoptim, pngquant, imagemagick
+
+USAGE
+    pic-optimizer.sh [-q QUALITY] [-s SIZE] [-r] [-n] {IN_FILE} -o {OUT_FILE}
+
+OPTIONS
+    -q QUALITY      Defines quality of the conversion. QUALITY is a number from
+                    0 to 100. Maps to jpegoptim '-m' and pngquant '--quality'.
+                    [default = 66]
+    -s SIZE         Defines size of the output image. Format: {width}x{height}.
+                    You can specify both or just one of them.
+    -r              Removes metadata from conversion. Maps to jpegoptim '-s' and
+                    pngquant '--strip'.
+    -n              Fake it, only prints commands.
+
+EXAMPLES
+    $ ./pic-optimizer.sh IN.JPG -o OUT.JPG -r
+        converts 'IN.JPG' to 'OUT.JPG' with 66% quality (default) and
+        metadatas stripped
+    $ ./pic-optimizer.sh PIC.JPG -q 80 -s 1000x -o STATIC/IMG/PIC.JPG
+        converts 'PIC.JPG' to 'STATIC/IMG/PIC.JPG' with 80% quality and resized
+        to 1000px of width
+    $ ./pic-optimizer.sh WIP/PIC.PNG -s x500 -o static/IMG/OUT.JPG
+        converts 'WIP/PIC.PNG' to 'static/IMG/OUT.JPG' with 66%
+        quality and resized to 500px of height
+
+AUTHOR
+    Written by Sylvain Saubier (<https://kultu.fr>)
+
+REPORTING BUGS
+    Mail at: <feedback@sylsau.com>
+
