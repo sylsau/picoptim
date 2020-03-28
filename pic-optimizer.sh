@@ -197,6 +197,7 @@ main() {
         syl_exit_err "wrong format for input file" $ERR_WRONG_ARG
     fi
 
+    rm -f "$FILE_TMP"
     msyl_say "All done!"
 }
 
