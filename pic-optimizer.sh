@@ -195,8 +195,7 @@ main() {
         $FAKE $JPEGOPTIM "$FILE_TMP" $OPT_STRIP -m$OPT_QUALITY --stdout >"$OPT_OUT"
     elif [[ "$FORMAT_OUT" = "PNG" ]]; then
         [[ "$OPT_STRIP" ]] && OPT_STRIP="--strip"
-        [[ "$FAKE" ]] && OPT_OUT="/dev/stdout"
-        $FAKE $PNGQUANT "$FILE_TMP" $OPT_STRIP --quality $OPT_QUALITY   >"$OPT_OUT"
+        $FAKE $PNGQUANT "$FILE_TMP" $OPT_STRIP --quality $OPT_QUALITY -o "$OPT_OUT" --force
     else
         syl_exit_err "wrong format for input file" $ERR_WRONG_ARG
     fi
