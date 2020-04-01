@@ -96,7 +96,7 @@ USAGE
 
 OPTIONS
     -q QUALITY      Defines quality of the output file. QUALITY is a number from
-                    0 to 100. Maps to jpegoptim '-m' and pngquant '--quality'.
+                    0 to 99. Maps to jpegoptim '-m' and pngquant '--quality'.
                     [default = $OPT_QUALITY]
     -s SIZE         Defines size of the output image. Format: {width}x{height}.
                     You can specify both or just one of them.
