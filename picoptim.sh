@@ -218,9 +218,9 @@ if [[ ${CONV_ORDER[1]} = "JPEG" ]]; then
 		"""$CONVERT "$OPT_IN" -quality 100 $OPT_SIZE JPEG:- | $JPEGOPTIM - $OPT_QUALITY $OPT_KEEP $OPT_VERBOSE >"$OPT_OUT""""
 	fi
 elif [[ ${CONV_ORDER[1]} = "PNG" ]]; then
-	[[ "$OPT_NCOLORS" ]] && OPT_QUALITY="" #&& msyl_say "quality parameter overwritten by color parameter" 
 	[[ ! "$OPT_KEEP" ]] && OPT_KEEP="--strip"
 	[[ "$OPT_QUALITY" ]] && OPT_QUALITY="--quality $OPT_QUALITY"
+	[[ "$OPT_NCOLORS" ]] && OPT_QUALITY="" #&& msyl_say "quality parameter overwritten by color parameter" 
 	if [[ -z "$FAKE" ]]; then 
 		$CONVERT "$OPT_IN" -quality 100 $OPT_SIZE PNG:- | $PNGQUANT $OPT_NCOLORS - $OPT_QUALITY $OPT_KEEP $OPT_VERBOSE >"$OPT_OUT"
 	else echo \
