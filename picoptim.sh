@@ -5,6 +5,9 @@
 #		CREATED: 03/24/2020 10:25:03 PM
 #===============================================================================
 
+# TODO
+# - implement the -i option
+
 # Enable strict mode in debug mode
 [[ $DEBUG ]] && set -o nounset -o xtrace
 set -o pipefail -o errexit -o errtrace
@@ -78,8 +81,10 @@ OPTIONS
 	-k, --no-strip		Keeps metadata during conversion. Disable jpegoptim's '-s' and
 				pngquant's '--strip'.
 				[default: (on)]
-	-b SUFFIX		Sets the backup suffix.
+	-b, --backup-suffix SUFFIX
+				Sets the backup suffix.
 				[default: $OPT_BKP_SUFFIX]
+	-i, -in-place		Disable backup (in-place editing).
 	-n 			Fakes it, so it only prints commands.
 	-v, --verbose		Be verbose.
 
@@ -109,6 +114,7 @@ EOF
 OPT_IN=
 OPT_FMT=
 OPT_OUT=
+OPT_NO_BKP=
 OPT_BKP_SUFFIX=_ORIG
 OPT_ORIG=
 OPT_QUALITY=66
@@ -156,6 +162,13 @@ while [[ $# -ge 1 ]]; do
 		"-k"|"--no-strip")
 			OPT_KEEP=true
 			;;
+		"-b"|"--backup-suffix")
+			shift
+			OPT_BKP_SUFFIX=$1
+			;;
+		"-i"|"--in-place")
+			OPT_NO_BKP=true
+			;;
 		"-v"|"--verbose")
 			OPT_VERBOSE="-v"
 			;;
@@ -196,6 +209,7 @@ fi
 			"""cp $OPT_VERBOSE $OPT_IN $OPT_ORIG """
 		fi
 		OPT_IN="${OPT_ORIG}"
+		msyl_say "a backup ${OPT_IN} file will be created."
 	}
 }
 if [[ "$OPT_OUT" =~ [Jj][Pp][Ee]?[Gg]$ ]]; then

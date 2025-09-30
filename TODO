@@ -1,0 +1,2 @@
+- implement the -i option using a temporary file
+- implement treatment of several files at once
